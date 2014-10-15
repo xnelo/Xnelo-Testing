@@ -53,11 +53,31 @@ namespace XNELO
 		protected:
 			std::ostream * _stream;
 		public:
+			/**
+			* Default Constructor
+			*/
 			XNELO_TESTING_API IReportGenerator();
+			/**
+			* Constructor.
+			*
+			* @param stream A pointer to an std::ostream object where the output of 
+			*			this report generator will go.
+			*/
 			XNELO_TESTING_API IReportGenerator(std::ostream * stream);
+			/**
+			* Destructor.
+			*/
 			XNELO_TESTING_API virtual ~IReportGenerator();
-			XNELO_TESTING_API virtual void SetOuputStream(std::ostream* stream);
+			/**
+			* Set the Output stream for this report generator.
+			*/
+			XNELO_TESTING_API virtual void SetOutputStream(std::ostream* stream);
 
+			/**
+			* Print the report title.
+			*
+			* @param title A C-string representation of the title.
+			*/
 			XNELO_TESTING_API virtual void PrintReportTitle(const char * title) = 0;
 			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle) = 0;
 			XNELO_TESTING_API virtual void EndTestSuite() = 0;
@@ -84,7 +104,7 @@ namespace XNELO
 			_stream = NULL;
 		}
 
-		inline void IReportGenerator::SetOuputStream(std::ostream* stream)
+		inline void IReportGenerator::SetOutputStream(std::ostream* stream)
 		{
 			_stream = stream;
 		}
