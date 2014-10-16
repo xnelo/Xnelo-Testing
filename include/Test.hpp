@@ -42,44 +42,137 @@ namespace XNELO
 {
 	namespace TESTING
 	{
+		/**
+		* A class that executes unit test and keeps track of their results.
+		*/
 		class Test
 		{
 		private:
+			/**Have all the tests been successful.*/
 			bool _success;
+			/**All the results of the unit tests.*/
 			std::vector<TEST_RESULT*> _results;
+			/**Whether or not to print results immediatly.*/
 			bool _immediateToCOUT;
+			/**Output only failed tests.*/
 			bool _printOnlyFailed;
 
+			/**Number of tests that passed.*/
 			int _passed;
+			/**Number of tests that failed.*/
 			int _failed;
 
+			/**The name of this test.*/
 			std::string _testName;
 
 		public:
+			/**
+			* Default constructor.
+			*/
 			XNELO_TESTING_API Test();
+			/**
+			* Constructor
+			*
+			* @param name The name of this Test.
+			*/
 			XNELO_TESTING_API Test(std::string name);
+			/**
+			* Constructor
+			*
+			* @param name The name of this Test.
+			* @param PrintImmediatlyToCOUT Print the results immediatly to standard output stream.
+			* @param printOnlyFailed Print only if the test failed.
+			*/
 			XNELO_TESTING_API Test(std::string name, bool PrintImmediatlyToCOUT, bool printOnlyFailed);
+			/**
+			* Destructor
+			*/
 			XNELO_TESTING_API ~Test();
 
+			/**
+			* Analyze all the tests and create the statistics.
+			*/
 			XNELO_TESTING_API void Analyze();
 
+			/**
+			* Clear all the statistics.
+			*/
 			XNELO_TESTING_API void Clear();
 
+			/**
+			* Unit test. Tests if the condition is true and records the results.
+			*
+			* @param condition A boolean test that executes out to true or false.
+			* @param testName The name of this unit test.
+			*/
 			XNELO_TESTING_API bool UnitTest(bool condition, std::string& testName);
 			XNELO_TESTING_API bool UnitTest(bool condition, const char *testName);
+
+			/**
+			* Unit test. Tests if the actual decimal value is within the tolerance of the expected value.
+			*
+			* @param actual The actual value of the test.
+			* @param expected The expected value of the test.
+			* @param tolerance The tolerance the test needs to be within.
+			* @param testname The name of this unit test.
+			*/
 			XNELO_TESTING_API bool UnitTest(double actual, double expected, double tolerance, const char *testName);
 			XNELO_TESTING_API bool UnitTest(double actual, double expected, double tolerance, std::string& testName);
 			XNELO_TESTING_API bool UnitTest(float actual, float expected, float tolerance, const char *testName);
 			XNELO_TESTING_API bool UnitTest(float actual, float expected, float tolerance, std::string& testName);
 
+			/**
+			* Get the number of failed tests.
+			*
+			* @return Returns an integer of the number of Failed tests.
+			*/
 			XNELO_TESTING_API int GetFailed();
+			/**
+			* Get the name of this test.
+			*
+			* @return Returns a string with the name of this test.
+			*/
 			XNELO_TESTING_API std::string GetName();
+			/**
+			* Get the number of passed tests.
+			*
+			* @return Returns an integer of the number of Passed tests.
+			*/
 			XNELO_TESTING_API int GetPassed();
+			/**
+			* Get if all the tests were successful.
+			*
+			* @return Returns a bool. If all the tests passed then true is 
+			*			returned and false if even one of the tests failed.
+			*/
 			XNELO_TESTING_API bool GetSuccess();
+			/**
+			* Get the number of tests run.
+			*
+			* @return Returns an integer representing the number of tests run.
+			*/
 			XNELO_TESTING_API int GetNumResults();
+			/**
+			* Get a specific test result. The index must be between 0 and the
+			* value of 'GetNumResults'.
+			*
+			* @param index The index of the result needed.
+			*
+			* @return Returns a pointer to a 'TEST_RESULT' object.
+			*/
 			XNELO_TESTING_API TEST_RESULT* GetTestResult(int index);
 
+			/**
+			* Set the name of this test.
+			*
+			* @param name A C-String with the name of this test.
+			*/
 			XNELO_TESTING_API void SetName(const char * name);
+			/**
+			* Set the name of this test
+			* 
+			* @param name a string with the name of this test.
+			*/
 			XNELO_TESTING_API void SetName(std::string name);
 		};
 	}//end namespace TESTING

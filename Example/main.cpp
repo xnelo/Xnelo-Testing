@@ -29,6 +29,27 @@
 
 #include "../include/Testing.hpp"
 
+bool testfunction(XNELO::TESTING::Test * test)
+{
+	test->SetName("Static Testing Function");
+
+	test->UnitTest(true, "Test1Passed");
+	test->UnitTest(1.0 == 1.0, "Test2Passed");
+	test->UnitTest(3 > 2, "Test3Passed");
+
+	return test->GetSuccess();
+}
+
+bool testfunction2(XNELO::TESTING::Test * test)
+{ 
+	test->SetName("Static Testing Function 2");
+
+	test->UnitTest(true, "Test1Passed");
+	test->UnitTest(true, "Test2Passed");
+
+	return test->GetSuccess();
+}
+
 int main(int argc, char * argv[])
 {
 	
@@ -48,9 +69,16 @@ int main(int argc, char * argv[])
 
 	ts.AddTest(&t);
 
+	XNELO::TESTING::TestSuite ts2;
+	ts2.SetName("Test Suite Example 2");
+	ts2.AddTestFunction(testfunction);
+	ts2.AddTestFunction(testfunction2);
+
+	ts.AddTestSuite(&ts2);
+
 	XNELO::TESTING::OutStreamGenerator tmp;
 
-	tmp.SetOuputStream(&std::cout);
+	tmp.SetOutputStream(&std::cout);
 	ts.SetReportGenerator(&tmp);
 
 	ts.ExecuteTests();

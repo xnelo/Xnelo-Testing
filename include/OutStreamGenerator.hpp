@@ -39,21 +39,59 @@ namespace XNELO
 {
 	namespace TESTING
 	{
+		/**
+		* An implementation of IReportGenerator.
+		*/
 		class OutStreamGenerator : public IReportGenerator
 		{
 		public:
+			/**
+			* Default Constructor
+			*/
 			XNELO_TESTING_API OutStreamGenerator();
+			/**
+			* Constructor
+			*
+			* @param stream A pointer to the stream that we output to.
+			*/
 			XNELO_TESTING_API OutStreamGenerator(std::ostream * stream);
+			/**
+			* Destructor
+			*/
 			XNELO_TESTING_API virtual ~OutStreamGenerator();
 
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void PrintReportTitle(const char * title);
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle);
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void EndTestSuite();
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void PrintSuiteStatistics(TestSuite * suite);
 
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void StartTest(const char * testName);
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void EndTest();
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void PrintTestResult(TEST_RESULT * result);
+			/**
+			* Overidden function
+			*/
 			XNELO_TESTING_API virtual void PrintTestStatistics(Test * test);
 		};
 	}//end namespace TESTING

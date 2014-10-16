@@ -28,6 +28,9 @@
 * This liscense can also be found at: http://opensource.org/licenses/Zlib
 */
 
+/**
+* This file contains all the include files needed for this library.
+*/
 #ifndef ___XNELO_TESTING_Testing_H__2014___
 #define ___XNELO_TESTING_Testing_H__2014___
 

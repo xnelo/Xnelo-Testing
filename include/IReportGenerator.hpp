@@ -51,6 +51,7 @@ namespace XNELO
 		class IReportGenerator
 		{
 		protected:
+			/**The stream we print results to.*/
 			std::ostream * _stream;
 		public:
 			/**
@@ -79,13 +80,46 @@ namespace XNELO
 			* @param title A C-string representation of the title.
 			*/
 			XNELO_TESTING_API virtual void PrintReportTitle(const char * title) = 0;
+			/**
+			* Start Printing a test suite.
+			*
+			* @param suiteTitle A C-string representation of the suite title we are starting.
+			*/
 			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle) = 0;
+			/**
+			* End the current test suite that we are printing working on.
+			*/
 			XNELO_TESTING_API virtual void EndTestSuite() = 0;
+			/**
+			* Print the statistics of the suite.
+			*
+			* @param suite A pointer to a TestSuite object that we will get the
+			*			statistics from.
+			*/
 			XNELO_TESTING_API virtual void PrintSuiteStatistics(TestSuite * suite) = 0;
 
+			/**
+			* Start printing a test.
+			*
+			* @param testName A C-String that contains the title of the test.
+			*/
 			XNELO_TESTING_API virtual void StartTest(const char * testName) = 0;
+			/**
+			* End the Test we are currently printing.
+			*/
 			XNELO_TESTING_API virtual void EndTest() = 0;
+			/**
+			* Print the result of the test.
+			*
+			* @param result A pointer to a TEST_RESULT object that contains the test
+			*			name and the result of the test.
+			*/
 			XNELO_TESTING_API virtual void PrintTestResult(TEST_RESULT * result) = 0;
+			/**
+			* Print the statistics of the passed in test.
+			*
+			* @param test A pointer to a Test where we will print the statistics from.
+			*/
 			XNELO_TESTING_API virtual void PrintTestStatistics(Test * test) = 0;
 		};
 

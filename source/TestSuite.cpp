@@ -39,6 +39,11 @@ namespace XNELO
 			_tests.push_back(test);
 		}
 
+		void TestSuite::AddTestSuite(TestSuite* suite)
+		{
+			_testSuites.push_back(suite);
+		}
+
 		void TestSuite::AddTestFunction(bool(*func) (Test*))
 		{
 			_testFunction.push_back(func);
@@ -111,8 +116,9 @@ namespace XNELO
 			{
 			delete _tests[i];
 			}
-			_tests.clear();
 			*/
+			_tests.clear();
+			_testSuites.clear();
 
 			for (int i = 0; i < (int)_testFunctionTests.size(); i++)
 			{
@@ -146,6 +152,16 @@ namespace XNELO
 				else
 					_failed++;
 			}
+
+			for (int i = 0; i < (int)_testSuites.size(); i++)
+			{
+				_testSuites[i]->Analyze();
+
+				if (_testSuites[i]->GetSuccess())
+					_passed++;
+				else
+					_failed++;
+			}
 		}
 
 		void TestSuite::ExecuteTests(bool PrintResults)
@@ -163,18 +179,27 @@ namespace XNELO
 				test->Analyze();
 			}
 
+			for (unsigned int i = 0; i < _testSuites.size(); i++)
+			{
+				_testSuites[i]->ExecuteTests(false);
+
+				_testSuites[i]->Analyze();
+			}
+
 			Analyze();
 
 			if (PrintResults)
 				this->PrintResults();
 		}
 
-		void TestSuite::PrintResults()
+		void TestSuite::PrintResults(bool printTitle)
 		{
 			if (!_reportGenerator)
 				return;
 
-			_reportGenerator->PrintReportTitle("Report Printing...");
+			if (printTitle)
+				_reportGenerator->PrintReportTitle("Report Printing...");
+
 			_reportGenerator->StartTestSuite(_suiteName.c_str());
 
 			//Each test ---------
@@ -208,6 +233,14 @@ namespace XNELO
 				_reportGenerator->PrintTestStatistics(test);
 
 				_reportGenerator->EndTest();
+			}
+			//-------------------
+
+			//Each Test Suite ---
+			for (unsigned int i = 0; i < _testSuites.size(); i++)
+			{
+				_testSuites[i]->SetReportGenerator(_reportGenerator);
+				_testSuites[i]->PrintResults(false);
 			}
 			//-------------------
 

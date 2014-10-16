@@ -68,8 +68,9 @@ namespace XNELO
 
 		void OutStreamGenerator::PrintSuiteStatistics(TestSuite * suite)
 		{
-			(*_stream) << "Tests Passed: " << suite->GetPassed() << "\nTests Failed: " << suite->GetFailed() <<
-				"\nTests Total: " << suite->GetTotalTests() << std::endl;
+			(*_stream) << suite->GetName() << " Statistics\nTests Passed: " << suite->GetPassed() 
+				<< "\nTests Failed: " << suite->GetFailed() << "\nTests Total: " 
+				<< suite->GetTotalTests() << std::endl;
 		}
 
 		void OutStreamGenerator::StartTest(const char * testName)

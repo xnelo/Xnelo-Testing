@@ -38,17 +38,39 @@ namespace XNELO
 {
 	namespace TESTING
 	{
+		/**
+		* A class with the results of a test.
+		*/
 		class TEST_RESULT
 		{
 		public:
+			/**If the test passed or falied. True if it passed false if not.*/
 			bool passed;
+			/**The name of the test that this result is from.*/
 			char* name;
 
+			/**
+			* Default Constructor.
+			*/
 			XNELO_TESTING_API TEST_RESULT();
+			/**
+			* Copy Constructor.
+			*/
 			XNELO_TESTING_API TEST_RESULT(const TEST_RESULT & other);
+			/**
+			* Destructor.
+			*/
 			XNELO_TESTING_API ~TEST_RESULT();
+			/**
+			* Assignment operator.
+			*/
 			XNELO_TESTING_API TEST_RESULT& operator = (const TEST_RESULT & other);
 		private:
+			/**
+			* Deep copy of the class.
+			*
+			* @param other The object to copy.
+			*/
 			XNELO_TESTING_API void deepCopy(const TEST_RESULT & other);
 		};
 	}//end namespace TESTING
