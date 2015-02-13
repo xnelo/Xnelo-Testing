@@ -1,7 +1,13 @@
 /**
-* Test_Result.hpp
+* @file Test_Result.hpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* This class holds the results of each individual tests. It holds the name of 
+* the test and whether or not the test passed.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -53,14 +59,17 @@ namespace XNELO
 			* Default Constructor.
 			*/
 			XNELO_TESTING_API TEST_RESULT();
+
 			/**
 			* Copy Constructor.
 			*/
 			XNELO_TESTING_API TEST_RESULT(const TEST_RESULT & other);
+
 			/**
 			* Destructor.
 			*/
 			XNELO_TESTING_API ~TEST_RESULT();
+
 			/**
 			* Assignment operator.
 			*/

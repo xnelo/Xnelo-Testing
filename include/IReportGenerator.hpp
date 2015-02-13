@@ -1,7 +1,13 @@
 /**
-* IReportGenerator.hpp
+* @file IReportGenerator.hpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* Defines the XNELO::TESTING::IReportGenerator interface class. This is an 
+* interface from which all report generators should inherit.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -58,6 +64,7 @@ namespace XNELO
 			* Default Constructor
 			*/
 			XNELO_TESTING_API IReportGenerator();
+
 			/**
 			* Constructor.
 			*
@@ -65,14 +72,21 @@ namespace XNELO
 			*			this report generator will go.
 			*/
 			XNELO_TESTING_API IReportGenerator(std::ostream * stream);
+
 			/**
 			* Destructor.
 			*/
 			XNELO_TESTING_API virtual ~IReportGenerator();
+
 			/**
-			* Set the Output stream for this report generator.
+			* End the Test we are currently printing.
 			*/
-			XNELO_TESTING_API virtual void SetOutputStream(std::ostream* stream);
+			XNELO_TESTING_API virtual void EndTest() = 0;
+
+			/**
+			* End the current test suite that we are printing/working on.
+			*/
+			XNELO_TESTING_API virtual void EndTestSuite() = 0;
 
 			/**
 			* Print the report title.
@@ -80,16 +94,7 @@ namespace XNELO
 			* @param title A C-string representation of the title.
 			*/
 			XNELO_TESTING_API virtual void PrintReportTitle(const char * title) = 0;
-			/**
-			* Start Printing a test suite.
-			*
-			* @param suiteTitle A C-string representation of the suite title we are starting.
-			*/
-			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle) = 0;
-			/**
-			* End the current test suite that we are printing working on.
-			*/
-			XNELO_TESTING_API virtual void EndTestSuite() = 0;
+
 			/**
 			* Print the statistics of the suite.
 			*
@@ -99,30 +104,45 @@ namespace XNELO
 			XNELO_TESTING_API virtual void PrintSuiteStatistics(TestSuite * suite) = 0;
 
 			/**
-			* Start printing a test.
-			*
-			* @param testName A C-String that contains the title of the test.
-			*/
-			XNELO_TESTING_API virtual void StartTest(const char * testName) = 0;
-			/**
-			* End the Test we are currently printing.
-			*/
-			XNELO_TESTING_API virtual void EndTest() = 0;
-			/**
 			* Print the result of the test.
 			*
 			* @param result A pointer to a TEST_RESULT object that contains the test
 			*			name and the result of the test.
 			*/
 			XNELO_TESTING_API virtual void PrintTestResult(TEST_RESULT * result) = 0;
+
 			/**
 			* Print the statistics of the passed in test.
 			*
 			* @param test A pointer to a Test where we will print the statistics from.
 			*/
 			XNELO_TESTING_API virtual void PrintTestStatistics(Test * test) = 0;
+
+			/**
+			* Set the Output stream for this report generator. This can be a 
+			* file, cout, ect.
+			*
+			* @param stream A pointer to an std::ostream object where the 
+			*			output of this report generator will go to.
+			*/
+			XNELO_TESTING_API virtual void SetOutputStream(std::ostream* stream);
+
+			/**
+			* Start printing a test.
+			*
+			* @param testName A C-String that contains the title of the test.
+			*/
+			XNELO_TESTING_API virtual void StartTest(const char * testName) = 0;
+
+			/**
+			* Start Printing a test suite.
+			*
+			* @param suiteTitle A C-string representation of the suite title we are starting.
+			*/
+			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle) = 0;
 		};
 
+		//Implementations below
 		inline IReportGenerator::IReportGenerator() : _stream(NULL)
 		{
 			return;

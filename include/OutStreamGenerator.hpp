@@ -1,7 +1,13 @@
 /**
-* OutStreamGenerator.hpp
+* @file OutStreamGenerator.hpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* A basic Report Generator that outputs the report information as a basic 
+* string. This class inherits from XNELO::TESTING::IReportGenerator.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -40,7 +46,8 @@ namespace XNELO
 	namespace TESTING
 	{
 		/**
-		* An implementation of IReportGenerator.
+		* A basic implementation of IReportGenerator that outputs the report as 
+		* basic text.
 		*/
 		class OutStreamGenerator : public IReportGenerator
 		{
@@ -49,50 +56,72 @@ namespace XNELO
 			* Default Constructor
 			*/
 			XNELO_TESTING_API OutStreamGenerator();
+
 			/**
 			* Constructor
 			*
 			* @param stream A pointer to the stream that we output to.
 			*/
 			XNELO_TESTING_API OutStreamGenerator(std::ostream * stream);
+
 			/**
 			* Destructor
 			*/
 			XNELO_TESTING_API virtual ~OutStreamGenerator();
 
 			/**
-			* Overidden function
+			* End the Test we are currently printing.
 			*/
-			XNELO_TESTING_API virtual void PrintReportTitle(const char * title);
+			XNELO_TESTING_API virtual void EndTest();
+
 			/**
-			* Overidden function
-			*/
-			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle);
-			/**
-			* Overidden function
+			* End the current test suite that we are printing/working on.
 			*/
 			XNELO_TESTING_API virtual void EndTestSuite();
+
 			/**
-			* Overidden function
+			* Print the report title.
+			*
+			* @param title A C-string representation of the title.
+			*/
+			XNELO_TESTING_API virtual void PrintReportTitle(const char * title);
+
+			/**
+			* Print the statistics of the suite.
+			*
+			* @param suite A pointer to a TestSuite object that we will get the
+			*			statistics from.
 			*/
 			XNELO_TESTING_API virtual void PrintSuiteStatistics(TestSuite * suite);
 
 			/**
-			* Overidden function
-			*/
-			XNELO_TESTING_API virtual void StartTest(const char * testName);
-			/**
-			* Overidden function
-			*/
-			XNELO_TESTING_API virtual void EndTest();
-			/**
-			* Overidden function
+			* Print the result of the test.
+			*
+			* @param result A pointer to a TEST_RESULT object that contains the test
+			*			name and the result of the test.
 			*/
 			XNELO_TESTING_API virtual void PrintTestResult(TEST_RESULT * result);
+
 			/**
-			* Overidden function
+			* Print the statistics of the passed in test.
+			*
+			* @param test A pointer to a Test where we will print the statistics from.
 			*/
 			XNELO_TESTING_API virtual void PrintTestStatistics(Test * test);
+
+			/**
+			* Start printing a test.
+			*
+			* @param testName A C-String that contains the title of the test.
+			*/
+			XNELO_TESTING_API virtual void StartTest(const char * testName);
+
+			/**
+			* Start Printing a test suite.
+			*
+			* @param suiteTitle A C-string representation of the suite title we are starting.
+			*/
+			XNELO_TESTING_API virtual void StartTestSuite(const char * suiteTitle);
 		};
 	}//end namespace TESTING
 }//end namespace XNELO

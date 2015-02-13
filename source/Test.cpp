@@ -1,7 +1,12 @@
 /**
-* Test.cpp
+* @file Test.cpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* Implementation of the Test class.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -38,78 +43,6 @@ namespace XNELO
 {
 	namespace TESTING
 	{
-
-		void Test::Clear()
-		{
-			_success = true;
-
-			for (int i = 0; i < (int)_results.size(); i++)
-			{
-				delete _results[i];
-			}
-			_results.clear();
-
-			_passed = 0;
-			_failed = 0;
-		}
-
-		int Test::GetFailed()
-		{
-			return _failed;
-		}
-
-		std::string Test::GetName()
-		{
-			return _testName;
-		}
-
-		int Test::GetPassed()
-		{
-			return _passed;
-		}
-
-		bool Test::GetSuccess()
-		{
-			return _success;
-		}
-
-		bool Test::UnitTest(bool condition, std::string &testName)
-		{
-			return UnitTest(condition, testName.c_str());
-		}
-
-		bool Test::UnitTest(double actual, double expected, double tolerance, std::string& testName)
-		{
-			return UnitTest(actual, expected, tolerance, testName.c_str());
-		}
-
-		bool Test::UnitTest(float actual, float expected, float tolerance, std::string& testName)
-		{
-			return UnitTest(actual, expected, tolerance, testName.c_str());
-		}
-
-		int Test::GetNumResults()
-		{
-			return (int)_results.size();
-		}
-
-		TEST_RESULT* Test::GetTestResult(int index)
-		{
-			if ((index > (int)_results.size()) || (index < 0))
-				return NULL;
-
-			return _results[index];
-		}
-
-		void Test::SetName(const char * name)
-		{
-			_testName = std::string(name);
-		}
-
-		void Test::SetName(std::string name)
-		{
-			_testName = name;
-		}
 
 		Test::Test() : _success(true), _results(), _immediateToCOUT(false),
 			_printOnlyFailed(false), _passed(0), _failed(0), _testName("")
@@ -151,6 +84,78 @@ namespace XNELO
 				else
 					_failed++;
 			}
+		}
+
+		void Test::Clear()
+		{
+			_success = true;
+
+			for (int i = 0; i < (int)_results.size(); i++)
+			{
+				delete _results[i];
+			}
+			_results.clear();
+
+			_passed = 0;
+			_failed = 0;
+		}
+
+		int Test::GetFailed()
+		{
+			return _failed;
+		}
+
+		std::string Test::GetName()
+		{
+			return _testName;
+		}
+
+		int Test::GetNumResults()
+		{
+			return (int)_results.size();
+		}
+
+		int Test::GetPassed()
+		{
+			return _passed;
+		}
+
+		bool Test::GetSuccess()
+		{
+			return _success;
+		}
+
+		TEST_RESULT* Test::GetTestResult(int index)
+		{
+			if ((index > (int)_results.size()) || (index < 0))
+				return NULL;
+
+			return _results[index];
+		}
+
+		void Test::SetName(const char * name)
+		{
+			_testName = std::string(name);
+		}
+
+		void Test::SetName(std::string name)
+		{
+			_testName = name;
+		}
+
+		bool Test::UnitTest(bool condition, std::string &testName)
+		{
+			return UnitTest(condition, testName.c_str());
+		}
+
+		bool Test::UnitTest(double actual, double expected, double tolerance, std::string& testName)
+		{
+			return UnitTest(actual, expected, tolerance, testName.c_str());
+		}
+
+		bool Test::UnitTest(float actual, float expected, float tolerance, std::string& testName)
+		{
+			return UnitTest(actual, expected, tolerance, testName.c_str());
 		}
 
 		bool Test::UnitTest(double actual, double expected, double tolerance, const char * testName)

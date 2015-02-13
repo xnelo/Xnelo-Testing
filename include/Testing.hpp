@@ -1,7 +1,14 @@
 /**
-* Testing.hpp
+* @file Testing.hpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* This file includes all the header files needed to use the Xnelo Testing 
+* library. For ease just include this file and you have access to the entire
+* library.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -28,9 +35,6 @@
 * This liscense can also be found at: http://opensource.org/licenses/Zlib
 */
 
-/**
-* This file contains all the include files needed for this library.
-*/
 #ifndef ___XNELO_TESTING_Testing_H__2014___
 #define ___XNELO_TESTING_Testing_H__2014___
 
@@ -39,7 +43,6 @@
 #include "OutStreamGenerator.hpp"
 #include "Test.hpp"
 #include "Test_Result.hpp"
-#include "Testing.hpp"
 #include "TestSuite.hpp"
 
 #endif //___XNELO_TESTING_Testing_H__2014___

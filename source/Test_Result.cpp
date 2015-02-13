@@ -1,7 +1,13 @@
 /**
-* Test_Result.cpp
+* @file Test_Result.cpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* The implementation of the Test_Result class.
+*
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa

@@ -1,7 +1,12 @@
 /**
-* TestSuite.cpp
+* @file TestSuite.cpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* Implementation of the TestSuite Class.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -34,66 +39,6 @@ namespace XNELO
 {
 	namespace TESTING
 	{
-		void TestSuite::AddTest(Test *test)
-		{
-			_tests.push_back(test);
-		}
-
-		void TestSuite::AddTestSuite(TestSuite* suite)
-		{
-			_testSuites.push_back(suite);
-		}
-
-		void TestSuite::AddTestFunction(bool(*func) (Test*))
-		{
-			_testFunction.push_back(func);
-		}
-
-		int TestSuite::GetFailed()
-		{
-			return _failed;
-		}
-
-		std::string TestSuite::GetName()
-		{
-			return _suiteName;
-		}
-
-		int TestSuite::GetTotalTests()
-		{
-			return (int)_tests.size() + (int)_testFunctionTests.size();
-		}
-
-		int TestSuite::GetPassed()
-		{
-			return _passed;
-		}
-
-		IReportGenerator * TestSuite::GetReportGenerator()
-		{
-			return _reportGenerator;
-		}
-
-		void TestSuite::SetName(std::string name)
-		{
-			_suiteName = name;
-		}
-
-		void TestSuite::SetName(const char * name)
-		{
-			_suiteName = std::string(name);
-		}
-
-		void TestSuite::SetReportGenerator(IReportGenerator * generator)
-		{
-			_reportGenerator = generator;
-		}
-
-		bool TestSuite::GetSuccess()
-		{
-			return (GetPassed() == GetTotalTests());
-		}
-
 		TestSuite::TestSuite() : _tests(), _passed(0), _failed(0), _suiteName(""), _reportGenerator(NULL)
 		{
 			return;
@@ -126,6 +71,21 @@ namespace XNELO
 			}
 			_testFunctionTests.clear();
 			_testFunction.clear();
+		}
+
+		void TestSuite::AddTest(Test *test)
+		{
+			_tests.push_back(test);
+		}
+
+		void TestSuite::AddTestFunction(bool(*func) (Test*))
+		{
+			_testFunction.push_back(func);
+		}
+
+		void TestSuite::AddTestSuite(TestSuite* suite)
+		{
+			_testSuites.push_back(suite);
 		}
 
 		void TestSuite::Analyze()
@@ -191,6 +151,52 @@ namespace XNELO
 			if (PrintResults)
 				this->PrintResults();
 		}
+
+		int TestSuite::GetFailed()
+		{
+			return _failed;
+		}
+
+		std::string TestSuite::GetName()
+		{
+			return _suiteName;
+		}
+
+		int TestSuite::GetPassed()
+		{
+			return _passed;
+		}
+
+		IReportGenerator * TestSuite::GetReportGenerator()
+		{
+			return _reportGenerator;
+		}
+
+		int TestSuite::GetTotalTests()
+		{
+			return (int)_tests.size() + (int)_testFunctionTests.size();
+		}
+
+		void TestSuite::SetName(std::string name)
+		{
+			_suiteName = name;
+		}
+
+		void TestSuite::SetName(const char * name)
+		{
+			_suiteName = std::string(name);
+		}
+
+		void TestSuite::SetReportGenerator(IReportGenerator * generator)
+		{
+			_reportGenerator = generator;
+		}
+
+		bool TestSuite::GetSuccess()
+		{
+			return (GetPassed() == GetTotalTests());
+		}
+		
 
 		void TestSuite::PrintResults(bool printTitle)
 		{

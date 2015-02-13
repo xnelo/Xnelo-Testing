@@ -1,7 +1,16 @@
 /**
-* TestingConfiguration.h
+* @file TestingConfiguration.h
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* This contains all of the configurations definitions to compile the Xnelo 
+* Testing library. This library defaults to build as a shared library (.dll on
+* windows and .so on linux). To compile as a static library you must define 
+* _XNELO_TESTING_STATIC_LIB_ either as a preprocessor directive while compiling
+* or as a #define before including Test.hpp.
+*/
+/* 
 * The zlib / libpng License
 *
 * Copyright(c) 2014 Spencer Hoffa
@@ -31,8 +40,8 @@
 #ifndef ___XNELO_TESTINGCONFIGURATION_H__2014___
 #define ___XNELO_TESTINGCONFIGURATION_H__2014___
 
-//! WIN32 for Windows32
-//! WIN64 for Windows64
+// WIN32 for Windows32
+// WIN64 for Windows64
 // The windows platform and API support SDL and WINDOW device
 #if defined(_WIN32) || defined(_WIN64) || defined(WIN32) || defined(WIN64)
 #define _XNELO_TESTING_WINDOWS_
@@ -41,15 +50,16 @@
 
 #ifdef _XNELO_TESTING_WINDOWS_API_
 
-// To build BIOEngine as a static library, you must define _BIOENGINE_STATIC_LIB_ in both the
-// Irrlicht build, *and* in the user application, before #including <irrlicht.h>
+// To build Xnelo Testing as a static library, you must define _XNELO_TESTING_STATIC_LIB_ 
+// in both the Xnelo Testing library, *and* in the user application, before 
+// #including <irrlicht.h>
 #ifndef _XNELO_TESTING_STATIC_LIB_
 #ifdef XNELO_TESTING_EXPORTS
 #define XNELO_TESTING_API __declspec(dllexport)
 #else
 #define XNELO_TESTING_API __declspec(dllimport)
 #endif // XNELO_TESTING_EXPORTS
-#else
+#else//building static library
 #define XNELO_TESTING_API
 #endif // _XNELO_TESTING_STATIC_LIB_
 #else // _XNELO_TESTING_WINDOWS_API_

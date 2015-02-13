@@ -1,7 +1,12 @@
 /**
-* OutStreamGenerator.cpp
+* @file OutStreamGenerator.cpp
 * @author Spencer Hoffa
 *
+* @copyright 2014 Spencer Hoffa
+*
+* The implementation of the OutStreamGenerator class.
+*/
+/*
 * The zlib/libpng License
 *
 * Copyright (c) 2014 Spencer Hoffa
@@ -51,14 +56,9 @@ namespace XNELO
 			return;
 		}
 
-		void OutStreamGenerator::PrintReportTitle(const char * title)
+		void OutStreamGenerator::EndTest()
 		{
-			(*_stream) << title << std::endl;
-		}
-
-		void OutStreamGenerator::StartTestSuite(const char * suiteTitle)
-		{
-			(*_stream) << suiteTitle << std::endl;
+			(*_stream) << std::endl;
 		}
 
 		void OutStreamGenerator::EndTestSuite()
@@ -66,21 +66,16 @@ namespace XNELO
 			(*_stream) << std::endl;
 		}
 
+		void OutStreamGenerator::PrintReportTitle(const char * title)
+		{
+			(*_stream) << title << std::endl;
+		}
+
 		void OutStreamGenerator::PrintSuiteStatistics(TestSuite * suite)
 		{
-			(*_stream) << suite->GetName() << " Statistics\nTests Passed: " << suite->GetPassed() 
-				<< "\nTests Failed: " << suite->GetFailed() << "\nTests Total: " 
+			(*_stream) << suite->GetName() << " Statistics\nTests Passed: " << suite->GetPassed()
+				<< "\nTests Failed: " << suite->GetFailed() << "\nTests Total: "
 				<< suite->GetTotalTests() << std::endl;
-		}
-
-		void OutStreamGenerator::StartTest(const char * testName)
-		{
-			(*_stream) << testName << std::endl;
-		}
-
-		void OutStreamGenerator::EndTest()
-		{
-			(*_stream) << std::endl;
 		}
 
 		void OutStreamGenerator::PrintTestResult(TEST_RESULT * result)
@@ -92,6 +87,16 @@ namespace XNELO
 		{
 			(*_stream) << "Passed: " << test->GetPassed() << "\nFailed: " << test->GetFailed() <<
 				"\nTotal: " << test->GetNumResults() << std::endl;
+		}
+
+		void OutStreamGenerator::StartTest(const char * testName)
+		{
+			(*_stream) << testName << std::endl;
+		}
+
+		void OutStreamGenerator::StartTestSuite(const char * suiteTitle)
+		{
+			(*_stream) << suiteTitle << std::endl;
 		}
 	}//end namespace TESTING
 }//end namespace XNELO

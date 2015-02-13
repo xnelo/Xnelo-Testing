@@ -1,4 +1,4 @@
-/**
+/*
 * The zlib / libpng License
 *
 * Copyright(c) 2014 Spencer Hoffa
@@ -52,7 +52,7 @@ bool testfunction2(XNELO::TESTING::Test * test)
 
 int main(int argc, char * argv[])
 {
-	
+	//create the tests
 	XNELO::TESTING::TestSuite ts;
 	ts.SetName("Test Suite Example");
 
@@ -76,9 +76,13 @@ int main(int argc, char * argv[])
 
 	ts.AddTestSuite(&ts2);
 
+	//create the report generator
 	XNELO::TESTING::OutStreamGenerator tmp;
 
+	//set the stream... this could be a file
+	//but here we use cout
 	tmp.SetOutputStream(&std::cout);
+	//set the test suite's report generator
 	ts.SetReportGenerator(&tmp);
 
 	ts.ExecuteTests();
