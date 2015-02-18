@@ -71,8 +71,8 @@ int main(int argc, char * argv[])
 
 	XNELO::TESTING::TestSuite ts2;
 	ts2.SetName("Test Suite Example 2");
-	ts2.AddTestFunction(testfunction);
-	ts2.AddTestFunction(testfunction2);
+	ts2.AddTestFunction(&testfunction);
+	ts2.AddTestFunction(&testfunction2);
 
 	ts.AddTestSuite(&ts2);
 

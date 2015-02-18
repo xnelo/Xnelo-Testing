@@ -1,0 +1,223 @@
+/**
+
+@mainpage Welcome
+
+@section intro_sec Introduction
+
+Welcome to Xnelo Testing. This software allows you to implement unit tests in your c++ source code. It also allows you to print the results of the tests in a format you choose. It also allows for easy implementation of different report output types.
+
+@section get_started Getting Started
+
+Below are the pages that allow you to get started using Xnelo Testing. Or you can just click @link compile here @endlink to start.
+
+@li @ref compile
+@li @ref usinglibrary
+@li @ref reportgeneratorimplementation 
+
+@section additional_information Additional Information
+
+@li @ref readmefile
+@li @ref license
+
+*/
+
+/**
+@page compile Compiling Xnelo Testing
+
+@section compile_sec Compile
+
+This section will help you compile Xnelo Testing for the system you are using. Currently there are only instructions for @link window_compile_sec Windows @endlink and @link linux_compile_sec Linux @endlink, though the section for linux should apply to all unix based systems that use the gcc compiler.
+
+@subsection window_compile_sec Windows
+
+Included with the library is a Visual Studios solution. Also there are Visual Studios projects for both the Xnelo Testing Library and the example program.
+
+1) Open the Testing.sln file (Visual Studios 2013).
+@image html OpeningFile.PNG "Open Testing.sln" width=20px
+
+2) Choose Solution configuration.
+@image html ChooseLibraryFormate.png "Choose Library Configuration" width=20px
+
+    a) DLL-Debug: This builds the DLL in debug mode.
+
+    b) DLL-Release: This builds the DLL in Release mode.
+
+    c) LIB-Debug: This builds the library as a static LIB file.
+
+    d) LIB-Release: This builds the library as a static LIB file in release.
+
+3)Build: You can either build the entire solution by pressing F7 or just the library by clicking "Build" menu, "Project Only" submenu, then "Build Only Xnelo Testing".
+@image html CompileLibraryOnly.png "Compile only Library" width=20cm
+
+The DLL's will be in the bin/(configuration you compiled)/ folder and the linking library will be in the lib/(configuration you compiled)/ folder. If you built the static library it will be in the lib/LIB-(Debug or Release)/ folder.
+
+Link these and include the 'include' directory and you are ready to use Xnelo Testing Library.
+
+@subsection linux_compile_sec Linux
+
+There is a make file included with the project that will use gcc to compile the library and example files. Open a terminal and navigate to the directory with the project in it. Type @c make. This will compile all the libraries, shared and static as well as the example programs. Otherwise you can type @c make with one of the following targes:
+
+    a) bin: compiles static library, shared library, example programs using both.
+
+    b) staticlib: compiles the static library and puts it in the lib folder.
+
+    c) example: compile the static library and then the exmple that uses the static library.
+
+    d) sharedlib: compiles the shared library and puts it in the lib folder.
+
+    e) exampleshared: compiles the shared library and then the example that uses the shared library.
+
+    f) runsharedexample: compiles the shared library, then the example that uses the shared library, and finally runs the example program.
+
+    g) clean: this target removes all the intermediary files used to create the projects.
+
+    h) cleanall: this target removes all the intermediary files, then removes the created library files and created programs.
+
+    i) cleandist: removes all files created by the makefile.
+
+All the library files you need to use are in the lib folder and all the example programs are in the bin folder. Link to the library you need in the lib folder and the include files in the include folder.
+
+@subsection include_directly Include Directly Into Project (Advanced)
+
+To include Xnelo Testing directly into your project just copy all the files in the include folder into your project and all the files from the source folder into your project. The only thing that needs to change is in the TestingConfiguration.h file, approx. line 45. Uncomment the line that says @code #define _XNELO_TESTING_STATIC_LIB_ 1  @endcode. This will allow the project to compile directly into your project.
+
+@image html LineToUncomment.PNG "Line to uncomment" width=20px
+
+-----------------------------------------------------------------
+<a class="el" href="index.html">Previous: Welcome</a>   @|   @link usinglibrary Next: Using Library@endlink
+
+*/
+
+/**
+@page usinglibrary Using Xnelo Testing Library
+
+@section linkandinclude Linking and Including
+
+Using Xnelo Testing Library is very simple. Start by linking the library into your project. As well as linking the correct library you must link to the include files from the project. Upon linking the library you just need to include @code #include "Testing.hpp" @endcode into any file you need to run tests on.
+
+@section setuptestsuite Setup Test Suite
+
+Before you start writing tests you need to set up a TestSuite class. The setting up of a TestSuite needs to be the first thing the code does before executing any tests. Along with setting up the TestSuite, you need to set up the report generator to get results.
+
+@code
+XNELO::TESTING::OutStreamGenerator generator;    //Create report Generator.
+generator.SetOutputStream(&std::cout);           //Set the stream to ouput to. This could be a file.
+
+XNELO::TESTING::TestSuite testSuite;             //create the test suite.
+testSuite.SetName("First Test Suite");           //set the name.
+testSuite.SetReportGenerator(&generator);        //set Report Generator.
+@endcode
+
+The input into the SetOutputStream function needs to be a pointer and the input into the SetReportGenerator needs to be a pointer.
+
+@section addtests Adding Tests
+
+Executing tests is the core of this library. While it is not necesary to add tests to a TestSuite class, you will get more out of your tests if you do. Below is the code to use a Test class.
+
+@code
+XNELO::TESTING::Test test;        //create the test class
+test.SetName("First Test Class"); //set the name of the test class
+
+//actually run some tests
+test.UnitTest(1==2, "First Test");//Any expression that can be reduced to a boolean value
+test.UnitTest(5>3, "Second Test");//can be placed into the first parameter of this function
+
+//next tests are example of floating point and double 
+//type testing.
+test.UnitTest(10.0f + 0.1f, 10.1f, 0.00001f, "Testing a float value");
+//the first value must be what the algorith or computer computes.
+//the second value must be what the expected outcome value should be.
+//the third value is the tolerance. How close the actual value from the expected is.
+//the last input is the name of the test.
+
+test.GetSuccess(); //this will return true iff all the tests passed.
+
+//if you are not adding the test to a test suite then you are done here.
+//otherwise below is how to add to a test suite.
+
+testSuite.AddTest(&test); //add the test to the test suite. Input must be a pointer.
+@endcode
+
+@section addtestfunctions Adding Test Functions to Test Suites
+
+You can define individual functions that run all your tests and then add these functions to a test suite. A test function needs to have the signature of bool functionName(Test *). This is a return value of bool and an input of a Test class pointer. Below is example code that will show how to set up a test function and add it to the TestSuite.
+
+@code
+bool TestFunction(XNELO::TESTING::Test * test)
+{
+    test->SetName("Test from test function");
+
+    test->UnitTest(8 < 10, "Test Function Test 1");
+    test->UnitTest(1+1 == 2, "Test Function Test 2");
+
+    return test->GetSuccess(); //The return value is the success of all the tests.
+}
+
+...
+
+testSuite.AddTestFunction(&TestFunction); //add the test function to the TestSuite
+@endcode
+
+@section addtestsuittotestsuite Adding TestSuite to TestSuite
+
+Another feature is that you can add TestSuites within TestSuites. This can help to organize your tests into small managble sections. Also if you find a library or other code that uses this Testing Library you can add the tests to your code.
+
+@code
+XNELO::TESTING::TestSuite testSuite2;
+testSuite2.SetName("Test Suite 2");
+testSuite2.AddTestFunction(&TestFunction);
+... Add all tests
+
+//now what is different about this TestSuite is you do not need to set
+//a Report Generator... so go to this next step
+testSuite.AddTestSuite(&testSuite2);
+@endcode
+
+And that is how you add a TestSuite to another TestSuite.
+
+@section executeteststestsuite Execute Tests
+
+The final thing needed to run a test using Xnelo Testing library is to tell the TestSuite to execute the tests.
+
+@code
+testSuite.ExecuteTests();
+@endcode
+
+And see the output.
+
+@section usingxnelotestingconclusion Conclustion
+
+Above are all the things you need to start using Xnelo Testing library. Everything from creating TestSuites to actually doing UnitTests on code. For a complete example of using Xnelo Testing Library look at the main.cpp file under the Example folder. Also read the individual class documentation for more details.
+
+-----------------------------------------------------------------
+@link compile Previous: Compiling Xnelo Testing@endlink   @|   @link reportgeneratorimplementation Custom Report Generators@endlink
+*/
+
+/**
+@page reportgeneratorimplementation Custom Report Generators
+
+@todo Write examples of how to implement the IReportGenerator class. Also explain how it works and when the different functions are called from the XNELO:TESTING::TestSuite::PrintResults function.
+
+-------------------------------------------------------------------------------
+@link usinglibrary Previous: Using Library@endlink
+*/
+
+/**
+
+@page license License
+
+This library is released under the zlib/libpng License. You may use this library for any purpose even comercial purposes subject to the restrictions below:
+
+The zlib/libpng License
+
+Copyright (c) 2014 Spencer Hoffa
+
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software. Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source distribution.
+
+*/
