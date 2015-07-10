@@ -37,11 +37,13 @@
 
 #include "TestSuite.hpp"
 
+#include <iostream>
+
 namespace XNELO
 {
 	namespace TESTING
 	{
-		OutStreamGenerator::OutStreamGenerator() : IReportGenerator()
+		OutStreamGenerator::OutStreamGenerator() : IReportGenerator(&std::cout)
 		{
 			return;
 		}

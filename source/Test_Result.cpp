@@ -77,7 +77,11 @@ namespace XNELO
 			if (other.name != NULL)
 			{
 				name = new char[strlen(other.name) + 1];
+#if defined(_XNELO_TESTING_WINDOWS_)
+				strcpy_s(name, strlen(other.name) + 1, other.name);
+#else
 				strcpy(name, other.name);
+#endif
 			}
 		}
 	}//end namespace TESTING

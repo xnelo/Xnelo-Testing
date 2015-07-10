@@ -190,7 +190,11 @@ namespace XNELO
 			TEST_RESULT* result = new TEST_RESULT();
 			result->passed = condition;
 			result->name = new char[strlen(testName) + 1];
+#if defined(_XNELO_TESTING_WINDOWS_)
+			strcpy_s(result->name, strlen(testName) + 1, testName);
+#else
 			strcpy(result->name, testName);
+#endif
 
 			_results.push_back(result);
 
